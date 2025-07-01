@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: yt-dlp-web
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn app:app
+    plan: free

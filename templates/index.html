@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Downloader</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #5e72e4, #1c2237);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #ffffff;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    form label {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: block;
+      text-align: left;
+      margin-left: 15px;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus, select:focus {
+      border-color: #5e72e4;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #5e72e4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4b63c4;
+    }
+
+    button:active {
+      background-color: #3b4a99;
+    }
+
+    .audio-format-container, .quality-container {
+      display: none;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 500px) {
+      form {
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+  <script>
+    // Function to show/hide the audio format and quality section based on the selected format
+    function toggleAudioFormat() {
+      const format = document.querySelector('select[name="format"]').value;
+      const audioFormatContainer = document.querySelector('.audio-format-container');
+      const qualityContainer = document.querySelector('.quality-container');
+      
+      if (format === 'audio') {
+        audioFormatContainer.style.display = 'block';
+        qualityContainer.style.display = 'none'; // Hide quality options for audio
+      } else {
+        audioFormatContainer.style.display = 'none';
+        qualityContainer.style.display = 'block'; // Show quality options for video
+      }
+    }
+
+    // Call toggleAudioFormat on page load to ensure correct visibility
+    window.onload = toggleAudioFormat;
+  </script>
+</head>
+<body>
+  <h1>Audio & Video Downloader</h1>
+  <form method="POST">
+    <label for="url">Video URL:</label>
+    <input type="text" name="url" id="url" placeholder="Enter valid video link..." required>
+
+    <label for="format">Format:</label>
+    <select name="format" id="format" required onchange="toggleAudioFormat()">
+      <option value="video">Video</option>
+      <option value="audio">Audio (MP3)</option>
+    </select>
+
+    <!-- Quality section, visible only for video format -->
+    <div class="quality-container">
+      <label for="quality">Quality:</label>
+      <select name="quality" id="quality" required>
+        <option value="fast">Fast (720p or lower)</option>
+        <option value="high">High Quality (1080p)</option>
+      </select>
+    </div>
+
+    <!-- Audio format section, visible only for audio format -->
+    <div class="audio-format-container">
+      <label for="audio_format">Audio Format:</label>
+      <select name="audio_format" id="audio_format">
+        <option value="m4a">M4A</option>
+      </select>
+    </div>
+
+    <button type="submit">Download</button>
+  </form>
+</body>
+</html>
